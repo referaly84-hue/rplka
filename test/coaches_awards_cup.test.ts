@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert';
+import fs from 'node:fs';
 import { getTeamCoach, computeCoachSynergy, Coach } from '../src/coaches.ts';
 import { computeMatchRatings, getMatchMotm, buildTeamOfRound } from '../src/awards.ts';
 import { initCup2026, recalculateCupGroups, drawNextRegionsRound } from '../src/cup2026.ts';
@@ -214,4 +215,54 @@ test('Russian Cup 2026/2027: midweek schedule has exactly 2 Tue, 4 Wed, 2 Thu ma
   assert.ok(cupState.regWeeks[1].tue < cupState.rplWeeks[1].tue, 'Regions R2 precedes RPL T2');
   assert.ok(cupState.rplWeeks[1].tue < cupState.regWeeks[2].tue, 'RPL T2 precedes Regions R3');
 });
+
+test('Referee assignment regulations: RPL & Cup only, 1 match per tour for head referee, zero other roles in same tour', () => {
+  const db = JSON.parse(fs.readFileSync('data/db.json', 'utf8'));
+
+  // 1. Для всех лиг, кроме РПЛ и Кубка, арбитры НЕ назначаются
+  const nonRplCupWithRefs = db.fixtures.filter((f: any) => f.comp !== 'rpl' && f.comp !== 'cup' && (f.refereeId || f.refereeName));
+  assert.strictEqual(nonRplCupWithRefs.length, 0, 'No non-RPL/Cup fixture should have referees assigned');
+
+  // 2. В каждом туре РПЛ и Кубка России каждый главный арбитр судит строго 1 матч и больше ничего
+  function getTourKey(f: any): string {
+    if (f.comp === 'rpl') return `rpl:${f.round}`;
+    if (f.comp === 'cup') {
+      const p = f.cupPath || (f.round <= 6 ? 'rpl_group' : 'regions_qual');
+      const r = f.qualRound || f.round || f.cupStage || 1;
+      return `cup:${p}:${r}`;
+    }
+    return `${f.comp}:${f.round || 1}`;
+  }
+
+  const tours: Record<string, any[]> = {};
+  for (const f of db.fixtures) {
+    if (f.comp === 'rpl' || f.comp === 'cup') {
+      const k = getTourKey(f);
+      tours[k] = tours[k] || [];
+      tours[k].push(f);
+    }
+  }
+
+  for (const [tourKey, list] of Object.entries(tours)) {
+    const headRefs = list.map((f: any) => f.refereeName).filter(Boolean);
+    const uniqueHeadRefs = new Set(headRefs);
+
+    // Главный арбитр назначен только на 1 матч в туре
+    assert.strictEqual(uniqueHeadRefs.size, headRefs.length, `Duplicate head referees found in tour ${tourKey}: ${headRefs.join(', ')}`);
+
+    // Больше ничего судить в этом туре он не может (ни ВАР, ни АВАР, ни резервным)
+    for (const f of list) {
+      if (f.reserveReferee) {
+        assert.ok(!uniqueHeadRefs.has(f.reserveReferee), `Head referee ${f.reserveReferee} is assigned as reserve referee in tour ${tourKey}`);
+      }
+      if (f.varReferee) {
+        assert.ok(!uniqueHeadRefs.has(f.varReferee), `Head referee ${f.varReferee} is assigned as VAR in tour ${tourKey}`);
+      }
+      if (f.avarReferee) {
+        assert.ok(!uniqueHeadRefs.has(f.avarReferee), `Head referee ${f.avarReferee} is assigned as AVAR in tour ${tourKey}`);
+      }
+    }
+  }
+});
+
 

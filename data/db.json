@@ -43882,7 +43882,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_bulanov",
+      "refereeName": "Евгений Буланов",
+      "assistants": [
+        "Дмитрий Мосякин",
+        "Алексей Ермилов"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Сергей Карасев",
+      "avarReferee": "Евгений Кукуляк"
     },
     {
       "id": "e28214c347",
@@ -43899,7 +43908,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_plisko",
+      "refereeName": "Михаил Плиско",
+      "assistants": [
+        "Кирилл Большаков",
+        "Ярослав Калиниченко"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Сергей Карасев",
+      "avarReferee": "Рафаэль Шафеев"
     },
     {
       "id": "e6f7832ec2",
@@ -43916,7 +43934,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_novikov",
+      "refereeName": "Никита Новиков",
+      "assistants": [
+        "Ярослав Калиниченко",
+        "Максим Гаврилин"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Антон Фролов",
+      "avarReferee": "Вера Опейкина"
     },
     {
       "id": "b3ee91fd0e",
@@ -43933,7 +43960,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_shafeev",
+      "refereeName": "Рафаэль Шафеев",
+      "assistants": [
+        "Андрей Болотенков",
+        "Александр Туркин"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Вера Опейкина",
+      "avarReferee": "Павел Шадыханов"
     },
     {
       "id": "c1e1fdafaf",
@@ -43950,7 +43986,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_abrosimov",
+      "refereeName": "Иван Абросимов",
+      "assistants": [
+        "Руслан Шекемов",
+        "Альмир Хатмуллин"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Павел Кукуян",
+      "avarReferee": "Евгений Кукуляк"
     },
     {
       "id": "f889a0d85e",
@@ -43967,7 +44012,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_levnikov",
+      "refereeName": "Кирилл Левников",
+      "assistants": [
+        "Альмир Хатмуллин",
+        "Андрей Образко"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Ян Бобровский",
+      "avarReferee": "Антон Фролов"
     },
     {
       "id": "cb46525d7a",
@@ -43984,7 +44038,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_naboka",
+      "refereeName": "Данил Набока",
+      "assistants": [
+        "Максим Гаврилин",
+        "Максим Белокур"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Евгений Буланов",
+      "avarReferee": "Рафаэль Шафеев"
     },
     {
       "id": "838fc0da8e",
@@ -44001,7 +44064,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_kashirin",
+      "refereeName": "Данил Каширин",
+      "assistants": [
+        "Никита Матиеску",
+        "Михаил Иванов"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Антон Фролов",
+      "avarReferee": "Алексей Сухой"
     },
     {
       "id": "2b6e95e855",
@@ -44018,7 +44090,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_kukuyan",
+      "refereeName": "Павел Кукуян",
+      "assistants": [
+        "Александр Богданов",
+        "Руслан Шекемов"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Евгений Кукуляк",
+      "avarReferee": "Сергей Иванов"
     },
     {
       "id": "2ec08d72dd",
@@ -44035,7 +44116,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_kukuyan",
+      "refereeName": "Павел Кукуян",
+      "assistants": [
+        "Денис Березнов",
+        "Егор Болховитин"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Владимир Москалев",
+      "avarReferee": "Павел Шадыханов"
     },
     {
       "id": "272ad8b560",
@@ -44052,7 +44142,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_frolov",
+      "refereeName": "Антон Фролов",
+      "assistants": [
+        "Максим Гаврилин",
+        "Андрей Филипкин"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Алексей Сухой",
+      "avarReferee": "Сергей Карасев"
     },
     {
       "id": "af6a655a2d",
@@ -44069,7 +44168,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_kaplenkov",
+      "refereeName": "Игорь Капленков",
+      "assistants": [
+        "Варанцо Петросян",
+        "Екатерина Курочкина"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Евгений Буланов",
+      "avarReferee": "Сергей Карасев"
     },
     {
       "id": "636c148a1b",
@@ -44086,7 +44194,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_abrosimov",
+      "refereeName": "Иван Абросимов",
+      "assistants": [
+        "Максим Гаврилин",
+        "Денис Петров"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Евгений Кукуляк",
+      "avarReferee": "Сергей Цыганок"
     },
     {
       "id": "0159a5ec05",
@@ -44103,7 +44220,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_opeykina",
+      "refereeName": "Вера Опейкина",
+      "assistants": [
+        "Никита Матиеску",
+        "Екатерина Курочкина"
+      ],
+      "reserveReferee": "Данил Каширин",
+      "varReferee": "Сергей Чебан",
+      "avarReferee": "Кирилл Левников"
     },
     {
       "id": "a51e149df1",
@@ -44120,7 +44246,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_frolov",
+      "refereeName": "Антон Фролов",
+      "assistants": [
+        "Алексей Ширяев",
+        "Денис Березнов"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Артем Чистяков",
+      "avarReferee": "Алексей Сухой"
     },
     {
       "id": "b4470215b6",
@@ -44137,7 +44272,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_opeykina",
+      "refereeName": "Вера Опейкина",
+      "assistants": [
+        "Дмитрий Семенов",
+        "Варанцо Петросян"
+      ],
+      "reserveReferee": "Сергей Чебан",
+      "varReferee": "Ян Бобровский",
+      "avarReferee": "Евгений Буланов"
     },
     {
       "id": "bcfa412df0",
@@ -44154,7 +44298,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_kazartsev",
+      "refereeName": "Василий Казарцев",
+      "assistants": [
+        "Адлан Хатуев",
+        "Альмир Хатмуллин"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Павел Кукуян",
+      "avarReferee": "Кирилл Левников"
     },
     {
       "id": "f17118e3be",
@@ -44171,7 +44324,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_matveev",
+      "refereeName": "Станислав Матвеев",
+      "assistants": [
+        "Адлан Хатуев",
+        "Максим Белокур"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Ян Бобровский",
+      "avarReferee": "Сергей Карасев"
     },
     {
       "id": "5378ae9c1f",
@@ -44188,7 +44350,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_chistyakov",
+      "refereeName": "Артем Чистяков",
+      "assistants": [
+        "Андрей Болотенков",
+        "Максим Белокур"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Кирилл Левников",
+      "avarReferee": "Вера Опейкина"
     },
     {
       "id": "7cf4ca5a59",
@@ -44205,7 +44376,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_bobrovsky",
+      "refereeName": "Ян Бобровский",
+      "assistants": [
+        "Алексей Лунев",
+        "Александр Туркин"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Евгений Буланов",
+      "avarReferee": "Кирилл Левников"
     },
     {
       "id": "037636810a",
@@ -44222,7 +44402,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_shadykhanov",
+      "refereeName": "Павел Шадыханов",
+      "assistants": [
+        "Александр Богданов",
+        "Алексей Ширяев"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Рафаэль Шафеев",
+      "avarReferee": "Павел Кукуян"
     },
     {
       "id": "c2c95a6557",
@@ -44239,7 +44428,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_tanashev",
+      "refereeName": "Инал Танашев",
+      "assistants": [
+        "Андрей Болотенков",
+        "Адлан Хатуев"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Ян Бобровский",
+      "avarReferee": "Владимир Москалев"
     },
     {
       "id": "a79fef28f0",
@@ -44256,7 +44454,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_shadykhanov",
+      "refereeName": "Павел Шадыханов",
+      "assistants": [
+        "Михаил Иванов",
+        "Максим Гаврилин"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Павел Кукуян",
+      "avarReferee": "Евгений Буланов"
     },
     {
       "id": "4963de84d1",
@@ -44273,7 +44480,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_zaika",
+      "refereeName": "Матвей Заика",
+      "assistants": [
+        "Алексей Ермилов",
+        "Дмитрий Маликов"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Павел Кукуян",
+      "avarReferee": "Сергей Иванов"
     },
     {
       "id": "4b37f090d1",
@@ -44290,7 +44506,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_kashirin",
+      "refereeName": "Данил Каширин",
+      "assistants": [
+        "Максим Белокур",
+        "Екатерина Курочкина"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Сергей Чебан",
+      "avarReferee": "Евгений Кукуляк"
     },
     {
       "id": "135058a650",
@@ -44307,7 +44532,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_bobrovsky",
+      "refereeName": "Ян Бобровский",
+      "assistants": [
+        "Александр Павлов",
+        "Егор Болховитин"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Рафаэль Шафеев",
+      "avarReferee": "Вера Опейкина"
     },
     {
       "id": "41ae9c79cf",
@@ -44324,7 +44558,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_bobrovsky",
+      "refereeName": "Ян Бобровский",
+      "assistants": [
+        "Альмир Хатмуллин",
+        "Максим Белокур"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Артем Чистяков",
+      "avarReferee": "Сергей Иванов"
     },
     {
       "id": "1d31294a94",
@@ -44341,7 +44584,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_zaika",
+      "refereeName": "Матвей Заика",
+      "assistants": [
+        "Денис Петров",
+        "Никита Матиеску"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Сергей Карасев",
+      "avarReferee": "Сергей Цыганок"
     },
     {
       "id": "090ffaca84",
@@ -44358,7 +44610,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_bulanov",
+      "refereeName": "Евгений Буланов",
+      "assistants": [
+        "Андрей Веретешкин",
+        "Андрей Болотенков"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Рафаэль Шафеев",
+      "avarReferee": "Кирилл Левников"
     },
     {
       "id": "e85f6b4af3",
@@ -44375,7 +44636,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_naboka",
+      "refereeName": "Данил Набока",
+      "assistants": [
+        "Александр Туркин",
+        "Егор Болховитин"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Сергей Чебан",
+      "avarReferee": "Сергей Цыганок"
     },
     {
       "id": "2694c9debf",
@@ -44392,7 +44662,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_kashirin",
+      "refereeName": "Данил Каширин",
+      "assistants": [
+        "Дмитрий Ермаков",
+        "Андрей Болотенков"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Ян Бобровский",
+      "avarReferee": "Сергей Иванов"
     },
     {
       "id": "a7b623ff3a",
@@ -44409,7 +44688,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_sukhoy",
+      "refereeName": "Алексей Сухой",
+      "assistants": [
+        "Дмитрий Ермаков",
+        "Екатерина Курочкина"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Кирилл Левников",
+      "avarReferee": "Евгений Буланов"
     },
     {
       "id": "5b612157dc",
@@ -44426,7 +44714,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_abrosimov",
+      "refereeName": "Иван Абросимов",
+      "assistants": [
+        "Дмитрий Сафьян",
+        "Варанцо Петросян"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Павел Шадыханов",
+      "avarReferee": "Рафаэль Шафеев"
     },
     {
       "id": "c6f1399cee",
@@ -44443,7 +44740,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_shadykhanov",
+      "refereeName": "Павел Шадыханов",
+      "assistants": [
+        "Дмитрий Мосякин",
+        "Андрей Болотенков"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Владимир Москалев",
+      "avarReferee": "Вера Опейкина"
     },
     {
       "id": "5ed835267a",
@@ -44460,7 +44766,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_kukuyan",
+      "refereeName": "Павел Кукуян",
+      "assistants": [
+        "Андрей Болотенков",
+        "Денис Березнов"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Рафаэль Шафеев",
+      "avarReferee": "Ян Бобровский"
     },
     {
       "id": "0275094c10",
@@ -44477,7 +44792,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_plisko",
+      "refereeName": "Михаил Плиско",
+      "assistants": [
+        "Алексей Лунев",
+        "Никита Матиеску"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Кирилл Левников",
+      "avarReferee": "Антон Фролов"
     },
     {
       "id": "ec12ba5e04",
@@ -44494,7 +44818,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_shadykhanov",
+      "refereeName": "Павел Шадыханов",
+      "assistants": [
+        "Екатерина Курочкина",
+        "Андрей Веретешкин"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Сергей Чебан",
+      "avarReferee": "Сергей Иванов"
     },
     {
       "id": "9f10485753",
@@ -44511,7 +44844,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_shadykhanov",
+      "refereeName": "Павел Шадыханов",
+      "assistants": [
+        "Дмитрий Ермаков",
+        "Михаил Иванов"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Сергей Чебан",
+      "avarReferee": "Антон Фролов"
     },
     {
       "id": "6f0ccfa997",
@@ -44528,7 +44870,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_shafeev",
+      "refereeName": "Рафаэль Шафеев",
+      "assistants": [
+        "Альмир Хатмуллин",
+        "Андрей Болотенков"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Сергей Чебан",
+      "avarReferee": "Антон Фролов"
     },
     {
       "id": "e76558ceb1",
@@ -44545,7 +44896,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_kazartsev",
+      "refereeName": "Василий Казарцев",
+      "assistants": [
+        "Андрей Филипкин",
+        "Александр Туркин"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Евгений Буланов",
+      "avarReferee": "Павел Кукуян"
     },
     {
       "id": "22d683a69d",
@@ -44562,7 +44922,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_zaika",
+      "refereeName": "Матвей Заика",
+      "assistants": [
+        "Руслан Шекемов",
+        "Денис Березнов"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Артем Чистяков",
+      "avarReferee": "Владимир Москалев"
     },
     {
       "id": "5e80edba04",
@@ -44579,7 +44948,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_abrosimov",
+      "refereeName": "Иван Абросимов",
+      "assistants": [
+        "Егор Болховитин",
+        "Альмир Хатмуллин"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Владимир Москалев",
+      "avarReferee": "Алексей Сухой"
     },
     {
       "id": "8f253a9c12",
@@ -44596,7 +44974,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_kazartsev",
+      "refereeName": "Василий Казарцев",
+      "assistants": [
+        "Максим Белокур",
+        "Андрей Веретешкин"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Рафаэль Шафеев",
+      "avarReferee": "Владимир Москалев"
     },
     {
       "id": "e350d3cf27",
@@ -44613,7 +45000,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_kaplenkov",
+      "refereeName": "Игорь Капленков",
+      "assistants": [
+        "Максим Белокур",
+        "Никита Матиеску"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Василий Казарцев",
+      "avarReferee": "Кирилл Левников"
     },
     {
       "id": "2244822c5e",
@@ -44630,7 +45026,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_bulanov",
+      "refereeName": "Евгений Буланов",
+      "assistants": [
+        "Андрей Болотенков",
+        "Егор Болховитин"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Евгений Кукуляк",
+      "avarReferee": "Сергей Иванов"
     },
     {
       "id": "da932f5132",
@@ -44647,7 +45052,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_novikov",
+      "refereeName": "Никита Новиков",
+      "assistants": [
+        "Максим Белокур",
+        "Денис Березнов"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Евгений Кукуляк",
+      "avarReferee": "Сергей Чебан"
     },
     {
       "id": "1d501a9374",
@@ -44664,7 +45078,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_abrosimov",
+      "refereeName": "Иван Абросимов",
+      "assistants": [
+        "Рустам Мухтаров",
+        "Дмитрий Маликов"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Кирилл Левников",
+      "avarReferee": "Сергей Карасев"
     },
     {
       "id": "90e6c748dd",
@@ -44681,7 +45104,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_plisko",
+      "refereeName": "Михаил Плиско",
+      "assistants": [
+        "Александр Павлов",
+        "Александр Богданов"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Ян Бобровский",
+      "avarReferee": "Артем Чистяков"
     },
     {
       "id": "31376d21ae",
@@ -44698,7 +45130,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_abrosimov",
+      "refereeName": "Иван Абросимов",
+      "assistants": [
+        "Максим Гаврилин",
+        "Егор Болховитин"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Павел Шадыханов",
+      "avarReferee": "Сергей Цыганок"
     },
     {
       "id": "8a6f30118f",
@@ -44715,7 +45156,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_bulanov",
+      "refereeName": "Евгений Буланов",
+      "assistants": [
+        "Максим Белокур",
+        "Альмир Хатмуллин"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Алексей Сухой",
+      "avarReferee": "Павел Шадыханов"
     },
     {
       "id": "20318d6338",
@@ -44732,7 +45182,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_bobrovsky",
+      "refereeName": "Ян Бобровский",
+      "assistants": [
+        "Андрей Болотенков",
+        "Александр Богданов"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Владимир Москалев",
+      "avarReferee": "Антон Фролов"
     },
     {
       "id": "981140f612",
@@ -44749,7 +45208,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_bulanov",
+      "refereeName": "Евгений Буланов",
+      "assistants": [
+        "Михаил Иванов",
+        "Адлан Хатуев"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Павел Шадыханов",
+      "avarReferee": "Сергей Иванов"
     },
     {
       "id": "68fcacb983",
@@ -44766,7 +45234,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_bobrovsky",
+      "refereeName": "Ян Бобровский",
+      "assistants": [
+        "Дмитрий Семенов",
+        "Рустам Мухтаров"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Павел Кукуян",
+      "avarReferee": "Антон Фролов"
     },
     {
       "id": "3389002ee8",
@@ -44783,7 +45260,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_bulanov",
+      "refereeName": "Евгений Буланов",
+      "assistants": [
+        "Михаил Иванов",
+        "Дмитрий Семенов"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Павел Шадыханов",
+      "avarReferee": "Владимир Москалев"
     },
     {
       "id": "417ac03249",
@@ -44800,7 +45286,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_abrosimov",
+      "refereeName": "Иван Абросимов",
+      "assistants": [
+        "Александр Туркин",
+        "Александр Богданов"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Алексей Сухой",
+      "avarReferee": "Рафаэль Шафеев"
     },
     {
       "id": "adac726215",
@@ -44817,7 +45312,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_bulanov",
+      "refereeName": "Евгений Буланов",
+      "assistants": [
+        "Максим Белокур",
+        "Александр Богданов"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Сергей Чебан",
+      "avarReferee": "Василий Казарцев"
     },
     {
       "id": "5128ea5126",
@@ -44834,7 +45338,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_abrosimov",
+      "refereeName": "Иван Абросимов",
+      "assistants": [
+        "Александр Богданов",
+        "Кирилл Большаков"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Павел Кукуян",
+      "avarReferee": "Сергей Карасев"
     },
     {
       "id": "10447660fa",
@@ -44851,7 +45364,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_bulanov",
+      "refereeName": "Евгений Буланов",
+      "assistants": [
+        "Дмитрий Семенов",
+        "Максим Белокур"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Кирилл Левников",
+      "avarReferee": "Сергей Цыганок"
     },
     {
       "id": "53436a1585",
@@ -44868,7 +45390,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_abrosimov",
+      "refereeName": "Иван Абросимов",
+      "assistants": [
+        "Андрей Веретешкин",
+        "Максим Гаврилин"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Сергей Карасев",
+      "avarReferee": "Владимир Москалев"
     },
     {
       "id": "7cf34f0031",
@@ -44885,7 +45416,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_bobrovsky",
+      "refereeName": "Ян Бобровский",
+      "assistants": [
+        "Кирилл Большаков",
+        "Александр Богданов"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Вера Опейкина",
+      "avarReferee": "Владимир Москалев"
     },
     {
       "id": "fef831f5d2",
@@ -44902,7 +45442,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_abrosimov",
+      "refereeName": "Иван Абросимов",
+      "assistants": [
+        "Максим Гаврилин",
+        "Александр Павлов"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Сергей Иванов",
+      "avarReferee": "Евгений Буланов"
     },
     {
       "id": "745a3172d0",
@@ -44919,7 +45468,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_abrosimov",
+      "refereeName": "Иван Абросимов",
+      "assistants": [
+        "Алексей Ширяев",
+        "Кирилл Большаков"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Сергей Иванов",
+      "avarReferee": "Вера Опейкина"
     },
     {
       "id": "c40fb8ea84",
@@ -44936,7 +45494,16 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_abrosimov",
+      "refereeName": "Иван Абросимов",
+      "assistants": [
+        "Адлан Хатуев",
+        "Максим Гаврилин"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Ян Бобровский",
+      "avarReferee": "Павел Кукуян"
     },
     {
       "id": "7116553979",
@@ -44953,110 +45520,119 @@
       "status": "scheduled",
       "hg": null,
       "ag": null,
-      "pos": 0
+      "pos": 0,
+      "refereeId": "ref_bulanov",
+      "refereeName": "Евгений Буланов",
+      "assistants": [
+        "Егор Болховитин",
+        "Руслан Шекемов"
+      ],
+      "reserveReferee": "Вера Опейкина",
+      "varReferee": "Кирилл Левников",
+      "avarReferee": "Евгений Кукуляк"
     }
   ],
   "derbies": [
     {
-      "id": "7d02f2057c",
+      "id": "b631fd474f",
       "a": "605409acc5",
       "b": "b459009212",
       "name": "Дерби всея Руси",
       "note": "Главное противостояние страны, максимальный накал и давление трибун."
     },
     {
-      "id": "8c31b897a5",
+      "id": "246d16fe79",
       "a": "605409acc5",
       "b": "b9b38696b1",
       "name": "Старейшее московское дерби",
       "note": "Старейшее принципиальное соперничество."
     },
     {
-      "id": "23ef1e3753",
+      "id": "387eb2573e",
       "a": "605409acc5",
       "b": "8e1e2eb19d",
       "name": "Московское дерби",
       "note": "Принципиальный матч, всегда жарко."
     },
     {
-      "id": "1ea7178343",
+      "id": "80bfc353b2",
       "a": "605409acc5",
       "b": "9737d136d1",
       "name": "Московское дерби",
       "note": "Амбициозный новичок столицы бросает вызов народной команде."
     },
     {
-      "id": "f972966e6d",
+      "id": "eb37ba44e0",
       "a": "b459009212",
       "b": "b9b38696b1",
       "name": "Братское дерби",
       "note": "Историческое столичное дерби."
     },
     {
-      "id": "e927006a39",
+      "id": "a13cf8b617",
       "a": "b459009212",
       "b": "8e1e2eb19d",
       "name": "Московское дерби",
       "note": "Игра армейцев и железнодорожников — всегда на нерве."
     },
     {
-      "id": "c577c08cd6",
+      "id": "b18008376b",
       "a": "b9b38696b1",
       "b": "8e1e2eb19d",
       "name": "Московское дерби",
       "note": "Борьба за московский приоритет."
     },
     {
-      "id": "32e50a1a5f",
+      "id": "c648f7ead1",
       "a": "b9b38696b1",
       "b": "9737d136d1",
       "name": "Московское дерби",
       "note": "Столичное дерби двух поколений."
     },
     {
-      "id": "eb812b5dbf",
+      "id": "bd90e47859",
       "a": "8e1e2eb19d",
       "b": "9737d136d1",
       "name": "Московское дерби",
       "note": "Борьба московских клубов."
     },
     {
-      "id": "8159016aef",
+      "id": "a85c3a6841",
       "a": "87628bf185",
       "b": "605409acc5",
       "name": "Битва двух столиц",
       "note": "Главное противостояние Петербурга и Москвы."
     },
     {
-      "id": "12513cbb3a",
+      "id": "f23d14da0e",
       "a": "87628bf185",
       "b": "b459009212",
       "name": "Принципиальное противостояние",
       "note": "Исторически острые матчи Петербурга и Москвы."
     },
     {
-      "id": "3bdd6ee152",
+      "id": "efd8065470",
       "a": "8cbf573c80",
       "b": "ec371266ce",
       "name": "Южное дерби",
       "note": "Главная битва за юг России."
     },
     {
-      "id": "8eb9223003",
+      "id": "dc4f482b6e",
       "a": "2546d02172",
       "b": "9e5a4acb81",
       "name": "Кавказское дерби",
       "note": "Региональная принципиальность и эмоции."
     },
     {
-      "id": "047d8bb39c",
+      "id": "fd385da964",
       "a": "84394543c8",
       "b": "86a391ae5f",
       "name": "Волжское дерби",
       "note": "Волжское дерби Татарстана и Самарской области."
     },
     {
-      "id": "8d4012da6a",
+      "id": "1387e61234",
       "a": "7b41e5ca69",
       "b": "605409acc5",
       "name": "Огненное противостояние",
@@ -45964,7 +46540,7 @@
             "gd": 0,
             "pts": 0,
             "zone": "bad",
-            "zoneLabel": "Вылет из турнира"
+            "zoneLabel": "Вылет"
           }
         ]
       },
@@ -46036,7 +46612,7 @@
             "gd": 0,
             "pts": 0,
             "zone": "bad",
-            "zoneLabel": "Вылет из турнира"
+            "zoneLabel": "Вылет"
           }
         ]
       },
@@ -46108,7 +46684,7 @@
             "gd": 0,
             "pts": 0,
             "zone": "bad",
-            "zoneLabel": "Вылет из турнира"
+            "zoneLabel": "Вылет"
           }
         ]
       },
@@ -46180,7 +46756,7 @@
             "gd": 0,
             "pts": 0,
             "zone": "bad",
-            "zoneLabel": "Вылет из турнира"
+            "zoneLabel": "Вылет"
           }
         ]
       }

@@ -504,13 +504,12 @@ function route() {
 }
 
 const fxRow = f => {
-  const sc = f.status === 'scheduled' || f.status === 'queued' || f.status === 'generating' ? f.time : `${f.hg}:${f.ag}`;
-  const link = f.full || f.status === 'live' || f.status === 'done';
+  const sc = f.status === 'scheduled' || f.status === 'queued' || f.status === 'generating' ? (f.time || '—:—') : `${f.hg}:${f.ag}`;
   const st = f.status === 'live' ? '<span class="tag live">LIVE</span>' : (f.status === 'generating' || f.status === 'queued' ? '<span class="tag">готовится</span>' : '');
   const homeLogo = f.homeLogo || teamLogo(f.home);
   const awayLogo = f.awayLogo || teamLogo(f.away);
 
-  return `<${link && f.full ? `a href="#/match/${f.id}" class="fxl"` : 'div'} class="fx${link && f.full ? ' fxl' : ''}">
+  return `<a href="#/match/${f.id}" class="fx fxl" title="Открыть подробности матча: ${e(f.homeName)} — ${e(f.awayName)}">
   <div class="d">${fmtD(f.date)}${f.time ? ' · ' + f.time : ''}</div>
   <div class="t r">
     <span class="t-name">${e(f.homeName)}</span>
@@ -527,7 +526,7 @@ const fxRow = f => {
     ${st}
     ${f.pen ? `<span class="tag">пен. ${f.pen.hg}:${f.pen.ag}</span>` : ''}
   </div>
-</${link && f.full ? 'a' : 'div'}>`;
+</a>`;
 };
 
 function renderTableLegend(comp, total) {
@@ -1002,9 +1001,15 @@ function drawMatch(app, id) {
   const awayLogo = f.awayLogo || teamLogo(f.away);
 
   const motm = M.motm;
-  const motmTeamLogo = motm ? (motm.player.teamLogo || teamLogo(motm.player.team)) : null;
+  const motmPlayer = motm ? (motm.player || motm) : null;
+  const motmTeamLogo = motmPlayer ? (motmPlayer.teamLogo || teamLogo(motmPlayer.teamId || motmPlayer.team)) : null;
 
-  app.innerHTML = `<div class="score">
+  app.innerHTML = `
+  <div style="margin-bottom:12px;display:flex;align-items:center;gap:10px">
+    <a href="javascript:history.back()" class="btn alt sm">← Назад</a>
+    <span class="muted small">${e(c ? c.comp + (c.roundLabel ? ' · ' + c.roundLabel : '') : f.label)}</span>
+  </div>
+  <div class="score">
   <div class="meta">${e(c ? c.comp + ', ' + c.roundLabel : f.label)} · ${fmtD(f.date)} ${f.time}${c && c.stadium ? ' · ' + e(c.stadium) : ''}</div>
   ${f.refereeName ? `<div class="meta" style="margin-top:4px;font-size:12px">Судья: <b>${e(f.refereeName)}</b>${f.assistants?.length ? ` · Помощники: ${f.assistants.map(e).join(', ')}` : ''}${f.reserveReferee ? ` · Резервный: ${e(f.reserveReferee)}` : ''}${f.varReferee ? ` · ВАР: ${e(f.varReferee)}` : ''}${f.avarReferee ? ` · АВАР: ${e(f.avarReferee)}` : ''}</div>` : ''}
   <div class="line">
@@ -1021,18 +1026,18 @@ function drawMatch(app, id) {
   <div class="meta" id="sub">${f.status === 'live' ? '<span class="live-dot"></span>Идёт матч' : f.status === 'done' ? 'Матч завершён' + (f.pen ? ` · по пенальти ${f.pen.hg}:${f.pen.ag}` : '') : f.status === 'generating' || f.status === 'queued' ? 'Матч готовится…' : 'Матч ещё не начался'}</div>
   ${c ? `<div class="meta" style="margin-top:6px">${e(c.weather)}${c.derby && c.derby !== 'нет' ? ' · ' + e(c.derby.split('.')[0]) : ''}</div>` : ''}
 </div>
-${motm ? `
+${motm && motmPlayer ? `
 <div class="motm-hero">
   <div class="row sp" style="gap:10px">
     <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
       <span class="motm-badge">⭐ Игрок матча (MOTM)</span>
       ${motmTeamLogo ? `<img class="t-logo md" src="${motmTeamLogo}" alt=""/>` : ''}
-      <b style="font-size:16px">${e(motm.player.name)}</b>
-      <span class="tag">${e(motm.player.pos)} · ${e(motm.player.team)}</span>
+      <b style="font-size:16px">${e(motmPlayer.name)}</b>
+      <span class="tag">${e(motmPlayer.pos)} · ${e(motmPlayer.team || motmPlayer.teamName || '')}</span>
     </div>
-    <div class="motm-rating" title="Оценка за матч">${motm.player.rating}</div>
+    <div class="motm-rating" title="Оценка за матч">${motmPlayer.rating}</div>
   </div>
-  <div style="margin-top:8px;font-size:13.5px;color:var(--ink)">${e(motm.headline)}</div>
+  <div style="margin-top:8px;font-size:13.5px;color:var(--ink)">${e(motm.headline || motm.interview?.headline || '')}</div>
 </div>` : ''}
 <div class="tabs" id="mt">${[['live', 'Трансляция'], ['stats', 'Статистика'], ['lineups', 'Составы'], ...(motm || f.status === 'done' ? [['interview', 'Интервью и MOTM']] : []), ...(S.me?.role === 'admin' ? [['admin', 'Админ']] : [])].map(([k, t]) => `<button data-k="${k}" class="${k === mtab ? 'on' : ''}">${t}</button>`).join('')}</div>
 <div id="mbody"></div>`;
@@ -1070,7 +1075,7 @@ function paintMatch() {
     }).join('') + '</div>';
   } else if (mtab === 'stats') {
     const s = M.stats;
-    if (!s) { b.innerHTML = '<div class="empty panel">Статистика появится после начала матча.</div>'; return; }
+    if (!s || !s.teams) { b.innerHTML = '<div class="empty panel">Статистика появится после начала матча.</div>'; return; }
     const H = s.teams.home, A = s.teams.away;
     const bar = (n, h, a) => {
       const t = (+h + +a) || 1;
@@ -1093,7 +1098,7 @@ function paintMatch() {
     </div>
     <div class="panel wrap"><table><thead><tr><th class="l">Игрок</th><th>Оценка</th><th>Мин</th><th>Г</th><th>П</th><th>Уд</th><th>xG</th><th>Отб</th><th>Сейвы</th><th>Фолы</th><th>ЖК</th><th>КК</th></tr></thead><tbody>${pl.map(p => {
       const rat = M.ratings?.[p.id]?.rating || p.rating || (p.min > 0 ? '6.5' : '—');
-      const isMotm = M.motm?.player?.id === p.id || M.motm?.player?.name === p.n;
+      const isMotm = M.motm?.player?.id === p.id || M.motm?.player?.name === p.n || M.motm?.name === p.n;
       const ratColor = +rat >= 8.0 ? 'background:#ffd700;color:#3f2e00' : (+rat >= 7.0 ? 'background:#e3f4e8;color:#0d5929' : (+rat < 6.0 ? 'background:#ffebee;color:#b71c1c' : 'background:var(--soft)'));
       return `<tr><td class="l">${isMotm ? '⭐ ' : ''}<b>${e(p.n)}</b> <span class="muted small">${p.side === 'home' ? e(M.fixture.homeName) : e(M.fixture.awayName)}</span></td><td><span class="tag" style="font-weight:700;${ratColor}">${rat}</span></td><td>${p.min}</td><td>${p.g}</td><td>${p.a}</td><td>${p.sh}</td><td>${p.xg}</td><td>${p.tk}</td><td>${p.sv}</td><td>${p.ff}/${p.fa}</td><td>${p.yc}</td><td>${p.rc}</td></tr>`;
     }).join('')}</tbody></table></div>`;
@@ -1103,8 +1108,8 @@ function paintMatch() {
       b.innerHTML = '<div class="empty panel">Игрок матча и флеш-интервью формируются после финального свистка.</div>';
       return;
     }
-    const p = motm.player;
-    const tLogo = p.teamLogo || teamLogo(p.team);
+    const p = motm.player || motm;
+    const tLogo = p.teamLogo || teamLogo(p.teamId || p.team);
     b.innerHTML = `
     <div class="panel motm-hero" style="margin-bottom:14px">
       <div class="row sp">
@@ -1112,11 +1117,11 @@ function paintMatch() {
           <span class="motm-badge">⭐ Игрок матча (MOTM)</span>
           ${tLogo ? `<img class="t-logo md" src="${tLogo}" alt=""/>` : ''}
           <h2 style="margin:0">${e(p.name)}</h2>
-          <span class="tag">${e(p.pos)} · ${e(p.team)}</span>
+          <span class="tag">${e(p.pos)} · ${e(p.team || p.teamName || '')}</span>
         </div>
         <div class="motm-rating" title="Оценка">${p.rating}</div>
       </div>
-      <p style="margin:10px 0 0;font-size:14px;color:var(--ink)">${e(motm.headline)}</p>
+      <p style="margin:10px 0 0;font-size:14px;color:var(--ink)">${e(motm.headline || motm.interview?.headline || '')}</p>
       <div class="row" style="margin-top:10px;gap:8px">
         ${p.goals ? `<span class="tag" style="background:#e3f4e8;border-color:var(--green)">⚽ Голы: ${p.goals}</span>` : ''}
         ${p.assists ? `<span class="tag" style="background:#e3f4e8;border-color:var(--green)">🎯 Передачи: ${p.assists}</span>` : ''}
@@ -1135,7 +1140,7 @@ function paintMatch() {
         <span class="small muted">Прямой эфир Матч ТВ</span>
       </div>
       <div class="interview-quote">
-        «${e(motm.quote)}»
+        «${e(motm.quote || motm.interview?.quote || '')}»
       </div>
       ${motm.coachTacticsReflection ? `
       <div class="interview-coach-note">
@@ -1173,20 +1178,37 @@ function paintMatch() {
     };
   } else if (mtab === 'lineups') {
     const L = M.lineups;
-    if (!L) { b.innerHTML = '<div class="empty panel">Составы откроются после начала матча.</div>'; return; }
+    if (!L) { b.innerHTML = '<div class="empty panel">Составы откроются перед началом матча.</div>'; return; }
     b.innerHTML = '<div class="grid g2">' + ['home', 'away'].map(s => {
-      const logo = L[s].logo || (s === 'home' ? f.homeLogo : f.awayLogo);
+      const sideLineup = L[s] || { starters: [], bench: [], name: s === 'home' ? f.homeName : f.awayName, formation: '4-3-3' };
+      const logo = sideLineup.logo || (s === 'home' ? f.homeLogo : f.awayLogo);
+      const coachInfo = M.coaches?.[s]?.coach;
+      const tid = s === 'home' ? f.home : f.away;
+      const canSeeTactics = sideLineup.speech != null && (S.me?.role === 'admin' || (S.me?.teamId && S.me.teamId === tid));
+
       return `<div class="panel">
         <div class="row" style="margin-bottom:12px">
           ${logo ? `<img class="t-logo md" src="${logo}" alt=""/>` : ''}
-          <h3 style="margin:0">${e(L[s].name)} · ${e(L[s].formation)}</h3>
+          <h3 style="margin:0">${e(sideLineup.name)} · ${e(sideLineup.formation)}</h3>
         </div>
-        ${L[s].starters.map(p => `<div>${e(p.pos)} ${e(p.name)}</div>`).join('')}
-        <h3 style="margin-top:14px">Скамейка</h3>
-        <div class="muted small">${L[s].bench.map(p => e(p.name)).join(', ') || '—'}</div>
-        <h3 style="margin-top:14px">Речь тренера</h3>
-        <div class="qa">${e(L[s].speech || '(молчание)')}</div>
-        ${L[s].training != null ? `<h3 style="margin-top:14px">Тренировки</h3><div class="qa">${e(L[s].training || '—')}</div>` : ''}
+        ${coachInfo ? `<div class="small muted" style="margin-bottom:10px"><b>Главный тренер:</b> ${e(coachInfo.name)} (${e(coachInfo.styleTitle || coachInfo.nationality)})</div>` : ''}
+        <h4 style="margin:0 0 6px">Стартовый состав (11)</h4>
+        ${sideLineup.starters?.length ? sideLineup.starters.map(p => `<div><span class="tag" style="min-width:32px;display:inline-block;text-align:center">${e(p.pos || 'ИГР')}</span> ${e(p.name)}</div>`).join('') : '<div class="muted small">Стартовый состав уточняется ближе к игре.</div>'}
+        <h4 style="margin-top:14px;margin-bottom:6px">Запасные</h4>
+        <div class="muted small">${sideLineup.bench?.map(p => e(p.name)).join(', ') || 'Запасные не заявлены'}</div>
+        ${canSeeTactics ? `
+        <h4 style="margin-top:14px;margin-bottom:6px;display:flex;align-items:center;gap:6px">
+          <span>🔒 Установка тренера</span>
+          <span class="tag" style="font-size:10.5px;background:#e8f0fe;color:#1a73e8;border-color:#aecbfa">только для клуба</span>
+        </h4>
+        <div class="qa">${e(sideLineup.speech || '(установка не заполнена)')}</div>
+        ${sideLineup.training ? `
+        <h4 style="margin-top:14px;margin-bottom:6px">Тренировочный план</h4>
+        <div class="qa">${e(sideLineup.training)}</div>` : ''}
+        ` : `
+        <div class="small muted" style="margin-top:14px;padding:8px 10px;background:var(--soft);border-radius:6px;border:1px dashed var(--line)">
+          🔒 Тактическая установка тренера и план тренировок доступны только владельцу клуба и администратору.
+        </div>`}
       </div>`;
     }).join('') + '</div>';
   } else if (mtab === 'admin') {
@@ -1880,7 +1902,7 @@ async function pgClub(app) {
       <div class="row sp">
         <div class="t-cell">
           ${oppLogo ? `<img class="t-logo md" src="${oppLogo}" alt=""/>` : ''}
-          <h3 style="margin:0">${fmtD(f.date)}, ${f.time} · ${e(f.label)} · ${f.home === c.team.id ? 'дома' : 'в гостях'} против ${e(f.opp)}</h3>
+          <h3 style="margin:0"><a href="#/match/${f.id}" style="color:inherit;text-decoration:none" title="Открыть подробности матча">${fmtD(f.date)}, ${f.time} · ${e(f.label)} · ${f.home === c.team.id ? 'дома' : 'в гостях'} против ${e(f.opp)}</a></h3>
         </div>
         <span>${f.derby ? '<span class="tag derby">дерби</span> ' : ''}<span class="tag">${f.lineup ? 'состав подан' : 'состав не подан'}</span></span>
       </div>

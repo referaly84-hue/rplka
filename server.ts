@@ -287,29 +287,102 @@ function isInInternationalBreak(dateStr: string): boolean {
   return db.internationalBreaks.some((b: any) => dateStr >= b.start && dateStr <= b.end);
 }
 
-function assignReferee(f: any) {
-  if (!db?.referees?.length) return;
-  const compKey = String(f.comp || '').startsWith('tournament_') ? 'friendly' : f.comp;
-  let eligible = db.referees.filter((r: any) => Array.isArray(r.leagues) && r.leagues.includes(compKey));
-  if (!eligible.length) eligible = db.referees;
-  const isDerby = db.derbies?.some((x: any) => (x.a === f.home && x.b === f.away) || (x.a === f.away && x.b === f.home));
-  const isImportant = isDerby || (f.comp === 'cup' && f.cupPath !== 'rpl_group' && (f.round >= 5 || f.cupStage)) || f.comp === 'rpl';
-  const sorted = [...eligible].sort((a: any, b: any) => (b.rating || 7) - (a.rating || 7));
-  const pool = isImportant ? sorted.slice(0, Math.min(4, sorted.length)) : sorted;
-  const chosen = pool[Math.floor(Math.random() * pool.length)];
-  if (chosen) {
-    f.refereeId = chosen.id;
-    f.refereeName = chosen.name;
+function getFixtureTourKey(f: any): string {
+  if (f.comp === 'rpl') return `rpl:${f.round}`;
+  if (f.comp === 'cup') {
+    const p = f.cupPath || (f.round <= 6 ? 'rpl_group' : 'regions_qual');
+    const r = f.qualRound || f.round || f.cupStage || 1;
+    return `cup:${p}:${r}`;
   }
+  return `${f.comp}:${f.round || 1}`;
+}
+
+function assignTourReferees(tourList: any[]) {
+  const validMatches = tourList.filter(f => f.comp === 'rpl' || f.comp === 'cup');
+  const invalidMatches = tourList.filter(f => f.comp !== 'rpl' && f.comp !== 'cup');
+  for (const f of invalidMatches) {
+    delete f.refereeId;
+    delete f.refereeName;
+    delete f.assistants;
+    delete f.reserveReferee;
+    delete f.varReferee;
+    delete f.avarReferee;
+  }
+  if (!validMatches.length || !db?.referees?.length) return;
+
+  const usedHeadIds = new Set<string>();
+  const comp = validMatches[0].comp;
+  let eligible = db.referees.filter((r: any) => !r.leagues || r.leagues.includes(comp));
+  if (!eligible.length) eligible = db.referees;
+
+  // Шаг 1. Распределяем главных арбитров (каждый арбитр — строго на 1 матч в туре)
+  for (const f of validMatches) {
+    let pool = eligible.filter((r: any) => !usedHeadIds.has(r.id));
+    if (!pool.length) pool = eligible;
+    const isDerby = db.derbies?.some((x: any) => (x.a === f.home && x.b === f.away) || (x.a === f.away && x.b === f.home));
+    const isImportant = isDerby || (f.comp === 'cup' && (f.round >= 5 || f.cupStage)) || f.comp === 'rpl';
+    const sorted = [...pool].sort((a: any, b: any) => (b.rating || 7) - (a.rating || 7));
+    const topPool = isImportant ? sorted.slice(0, Math.min(4, sorted.length)) : sorted;
+    const chosen = topPool[Math.floor(Math.random() * topPool.length)];
+    if (chosen) {
+      f.refereeId = chosen.id;
+      f.refereeName = chosen.name;
+      usedHeadIds.add(chosen.id);
+    }
+  }
+
+  // Шаг 2. Главные арбитры больше ничего в этом туре не судят!
+  const allHeadNames = new Set(validMatches.map(f => f.refereeName).filter(Boolean));
+  const nonHeadRefs = db.referees.filter((r: any) => !usedHeadIds.has(r.id) && !allHeadNames.has(r.name));
+  const nonHeadPool = nonHeadRefs.length ? nonHeadRefs : db.referees.filter((r: any) => !usedHeadIds.has(r.id));
+
+  // Ассистенты арбитра
   const asstPool = (db.assistants || []).length ? db.assistants : ASSISTANT_REFEREES.map((n, i) => ({ id: 'asst_' + i, name: n }));
-  const shuffledAsst = [...asstPool].sort(() => Math.random() - 0.5);
-  f.assistants = shuffledAsst.slice(0, 2).map((a: any) => a.name);
-  const resPool = db.referees.filter((r: any) => r.id !== f.refereeId);
-  f.reserveReferee = (resPool.find((r: any) => r.role === 'Резервный судья') || resPool[Math.floor(Math.random() * resPool.length)])?.name || 'Вера Опейкина';
-  const varPool = db.referees.filter((r: any) => r.varRole && r.id !== f.refereeId);
-  f.varReferee = varPool[Math.floor(Math.random() * varPool.length)]?.name || 'Сергей Карасев';
-  const avarPool = varPool.filter((r: any) => r.name !== f.varReferee);
-  f.avarReferee = avarPool[Math.floor(Math.random() * avarPool.length)]?.name || 'Павел Кукуян';
+  const shuffledAssts = [...asstPool].sort(() => Math.random() - 0.5);
+  let asstIdx = 0;
+
+  for (const f of validMatches) {
+    const a1 = shuffledAssts[asstIdx % shuffledAssts.length]?.name || 'Дмитрий Мосякин';
+    const a2 = shuffledAssts[(asstIdx + 1) % shuffledAssts.length]?.name || 'Егор Болховитин';
+    asstIdx += 2;
+    f.assistants = [a1, a2];
+
+    // Резервный арбитр (строго из не-главных арбитров тура)
+    const resList = nonHeadPool.filter((r: any) => r.id !== f.refereeId);
+    const chosenRes = resList.find((r: any) => r.role === 'Резервный судья') || resList[Math.floor(Math.random() * resList.length)];
+    f.reserveReferee = chosenRes?.name || 'Вера Опейкина';
+
+    // ВАР арбитр (строго из не-главных арбитров тура)
+    let varList = nonHeadPool.filter((r: any) => r.varRole && r.id !== f.refereeId && r.name !== f.reserveReferee);
+    if (!varList.length) varList = nonHeadPool.filter((r: any) => r.name !== f.reserveReferee);
+    const chosenVar = varList[Math.floor(Math.random() * varList.length)];
+    f.varReferee = chosenVar?.name || 'Сергей Карасев';
+
+    // АВАР арбитр (строго из не-главных арбитров тура)
+    let avarList = nonHeadPool.filter((r: any) => r.id !== f.refereeId && r.name !== f.reserveReferee && r.name !== f.varReferee);
+    if (!avarList.length) avarList = nonHeadPool;
+    const chosenAvar = avarList[Math.floor(Math.random() * avarList.length)];
+    f.avarReferee = chosenAvar?.name || 'Павел Кукуян';
+  }
+}
+
+function assignReferee(f: any, siblingList?: any[]) {
+  // Арбитры назначаются ТОЛЬКО на матчи РПЛ и Кубка России; для остальных лиг арбитры не назначаются
+  if (f.comp !== 'rpl' && f.comp !== 'cup') {
+    delete f.refereeId;
+    delete f.refereeName;
+    delete f.assistants;
+    delete f.reserveReferee;
+    delete f.varReferee;
+    delete f.avarReferee;
+    return;
+  }
+  if (!db?.referees?.length) return;
+
+  const tourKey = getFixtureTourKey(f);
+  const validSiblings = Array.isArray(siblingList) ? siblingList : db.fixtures || [];
+  const siblings = validSiblings.filter((x: any) => x.id !== f.id && getFixtureTourKey(x) === tourKey);
+  assignTourReferees([f, ...siblings]);
 }
 
 function updateRefereeStats(f: any, events: any[] = []) {
@@ -365,9 +438,34 @@ function load() {
   for (const k of ['squads', 'lineups', 'tactics', 'sessions']) {
     if (!db[k]) db[k] = {};
   }
+
+  // 1. Очищаем арбитров во всех лигах, кроме РПЛ и Кубка России
   for (const f of db.fixtures) {
-    if (!f.refereeId) assignReferee(f);
+    if (f.comp !== 'rpl' && f.comp !== 'cup') {
+      delete f.refereeId;
+      delete f.refereeName;
+      delete f.assistants;
+      delete f.reserveReferee;
+      delete f.varReferee;
+      delete f.avarReferee;
+    }
   }
+
+  // 2. В РПЛ и Кубке России: группируем по турам и переназначаем судей
+  // Правило: главный арбитр может быть назначен только на 1 матч в туре, больше ничего в туре не судит
+  const tours: Record<string, any[]> = {};
+  for (const f of db.fixtures) {
+    if (f.comp === 'rpl' || f.comp === 'cup') {
+      const k = getFixtureTourKey(f);
+      tours[k] = tours[k] || [];
+      tours[k].push(f);
+    }
+  }
+
+  for (const list of Object.values(tours)) {
+    assignTourReferees(list);
+  }
+  save();
 
   // Синхронизируем список соревнований
   db.comps = COMPS;
@@ -1561,7 +1659,7 @@ function genSeason(start: string, name: string) {
     { rplWeeks, regWeeks }
   );
 
-  cupFixtures.forEach(assignReferee);
+  cupFixtures.forEach((f: any) => assignReferee(f));
   db.cupState2026 = cupState;
   db.fixtures.push(...cupFixtures);
 
@@ -1577,7 +1675,7 @@ function advanceCup() {
     const secondLeagueTeams = db.teams.filter((t: any) => t.comp.startsWith('2la') || t.comp.startsWith('2lb'));
     const mediaTeams = db.teams.filter((t: any) => t.comp === 'media' || t.comp === 'media_div2');
     const { cupState, fixtures: cupFixtures } = initCup2026(S(), rplTeams, fnlTeams, secondLeagueTeams, mediaTeams, uid);
-    cupFixtures.forEach(assignReferee);
+    cupFixtures.forEach((f: any) => assignReferee(f));
     db.cupState2026 = cupState;
     db.fixtures = db.fixtures.filter((f: any) => f.comp !== 'cup').concat(cupFixtures);
     save();
@@ -1594,7 +1692,7 @@ function advanceCup() {
 
     if (roundFx.length > 0 && roundFx.every((f: any) => f.status === 'done') && nextFx.length === 0) {
       const newFixtures = drawNextRegionsRound(db.cupState2026, r, roundFx, uid);
-      newFixtures.forEach(assignReferee);
+      newFixtures.forEach((f: any) => assignReferee(f));
       db.fixtures.push(...newFixtures);
       save();
     }
@@ -1944,12 +2042,12 @@ const pubFx = (f: any) => ({
   pen: f.pen || null,
   full: f.status === 'live' || f.status === 'done' ? !!f.st || f.status === 'live' : fullSim(f),
   derby: !!db.derbies.find((d: any) => (d.a === f.home && d.b === f.away) || (d.a === f.away && d.b === f.home)),
-  refereeId: f.refereeId || null,
-  refereeName: f.refereeName || null,
-  assistants: f.assistants || [],
-  reserveReferee: f.reserveReferee || null,
-  varReferee: f.varReferee || null,
-  avarReferee: f.avarReferee || null
+  refereeId: (f.comp === 'rpl' || f.comp === 'cup') ? (f.refereeId || null) : null,
+  refereeName: (f.comp === 'rpl' || f.comp === 'cup') ? (f.refereeName || null) : null,
+  assistants: (f.comp === 'rpl' || f.comp === 'cup') ? (f.assistants || []) : [],
+  reserveReferee: (f.comp === 'rpl' || f.comp === 'cup') ? (f.reserveReferee || null) : null,
+  varReferee: (f.comp === 'rpl' || f.comp === 'cup') ? (f.varReferee || null) : null,
+  avarReferee: (f.comp === 'rpl' || f.comp === 'cup') ? (f.avarReferee || null) : null
 });
 
 app.post('/api/login', (req, res) => {
@@ -2011,6 +2109,36 @@ app.get('/api/match/:id', (req: any, res) => {
   const HName = tn(f.home), AName = tn(f.away);
   const coachHome = getCoachForTeam(f.home);
   const coachAway = getCoachForTeam(f.away);
+
+  const rawMotm = m?.motm || (f.status === 'done' && m ? getMatchMotm(m, f, HName, AName, coachHome, coachAway) : (f.motm ? { ...f.motm, teamName: HName, pos: 'НАП', interview: { headline: `«${f.motm.name}: игра была напряжённой до последних минут»`, quote: `Мы готовились к трудному матчу, соперник оказал серьезное сопротивление. Рады победе и поддержке трибун!`, tacticsComment: `Установка тренера была ясна: надёжность сзади и острота впереди.`, mood: 'satisfied' } } : null));
+
+  let motmOut: any = null;
+  if (rawMotm) {
+    const p = rawMotm.player || {
+      id: rawMotm.pid || rawMotm.id,
+      name: rawMotm.name,
+      pos: rawMotm.pos || 'НАП',
+      team: rawMotm.teamName || rawMotm.team || HName,
+      rating: rawMotm.rating || '7.5',
+      goals: rawMotm.goals || 0,
+      assists: rawMotm.assists || 0,
+      saves: rawMotm.saves || 0,
+      xg: rawMotm.xg,
+      shots: rawMotm.shots,
+      tackles: rawMotm.tackles,
+      teamLogo: rawMotm.teamLogo || teamLogo(rawMotm.teamId)
+    };
+    motmOut = {
+      ...rawMotm,
+      player: p,
+      name: rawMotm.name || p.name,
+      rating: rawMotm.rating || p.rating,
+      headline: rawMotm.headline || rawMotm.interview?.headline || `«${p.name}: командная работа принесла результат»`,
+      quote: rawMotm.quote || rawMotm.interview?.quote || `Мы провели отличный матч и бились за каждый мяч. Спасибо болельщикам за поддержку!`,
+      coachTacticsReflection: rawMotm.coachTacticsReflection || rawMotm.interview?.tacticsComment || ''
+    };
+  }
+
   const out: any = {
     fixture: pubFx(f),
     events: [],
@@ -2020,7 +2148,7 @@ app.get('/api/match/:id', (req: any, res) => {
     final: null,
     err: isAdm ? f.err : undefined,
     fallback: !!f.fallback,
-    motm: m?.motm || (f.status === 'done' && m ? getMatchMotm(m, f, HName, AName, coachHome, coachAway) : (f.motm ? { ...f.motm, teamName: HName, pos: 'НАП', interview: { headline: `«${f.motm.name}: игра была напряжённой до последних минут»`, quote: `Мы готовились к трудному матчу, соперник оказал серьезное сопротивление. Рады победе и поддержке трибун!`, tacticsComment: `Установка тренера была ясна: надёжность сзади и острота впереди.`, mood: 'satisfied' } } : null)),
+    motm: motmOut,
     ratings: m?.ratings || (f.status === 'done' && m ? computeMatchRatings(m, f, HName, AName) : []),
     coaches: {
       home: { coach: coachHome, synergy: computeCoachSynergy(coachHome, db.tactics[f.home]) },
@@ -2031,35 +2159,83 @@ app.get('/api/match/:id', (req: any, res) => {
     out.events = f.status === 'live' ? m.events.slice(0, f.pos) : m.events;
     out.stats = f.status === 'done' ? m.stats : computeStats(out.events, m.ctx);
     const show = isAdm || f.status === 'done' || f.status === 'live';
-    if (show) {
+    if (m.ctx?.lineup) {
       out.lineups = {};
       for (const s of ['home', 'away']) {
+        const tid = f[s];
         const L = m.ctx.lineup[s];
-        out.lineups[s] = {
-          name: m.ctx.sides[s].name,
-          logo: m.ctx.sides[s].logo || teamLogo(f[s]),
-          formation: L.formation,
-          speech: L.speech,
-          training: isAdm || f.status === 'done' ? L.training : undefined,
-          starters: L.starters.map((id: string) => ({ id, name: m.ctx.names[id], pos: m.ctx.pos[id] })),
-          bench: L.bench.map((id: string) => ({ id, name: m.ctx.names[id], pos: m.ctx.pos[id] }))
-        };
+        if (L) {
+          const canSeeTactics = isAdm || (req.me?.teamId && req.me.teamId === tid);
+          out.lineups[s] = {
+            name: m.ctx.sides?.[s]?.name || (s === 'home' ? HName : AName),
+            logo: m.ctx.sides?.[s]?.logo || teamLogo(tid),
+            formation: L.formation || '4-3-3',
+            speech: canSeeTactics ? (L.speech || '(установка не заполнена)') : undefined,
+            training: canSeeTactics ? (L.training || '') : undefined,
+            starters: (L.starters || []).map((id: string) => ({ id, name: m.ctx.names?.[id] || player(id)?.name || 'Игрок', pos: m.ctx.pos?.[id] || player(id)?.pos || '' })),
+            bench: (L.bench || []).map((id: string) => ({ id, name: m.ctx.names?.[id] || player(id)?.name || 'Игрок', pos: m.ctx.pos?.[id] || player(id)?.pos || '' }))
+          };
+        }
       }
     }
-    out.ctx = {
-      comp: m.ctx.comp,
-      roundLabel: m.ctx.roundLabel,
-      stadium: m.ctx.stadium,
-      weather: m.ctx.weather,
-      derby: m.ctx.derby,
-      motiv: m.ctx.motiv
-    };
-    if (isAdm) {
-      out.ctx.prompt = m.ctx.prompt1;
-      out.ctx.fat = m.ctx.fat;
-      out.ctx.race = m.ctx.race;
+    if (m.ctx) {
+      out.ctx = {
+        comp: m.ctx.comp,
+        roundLabel: m.ctx.roundLabel,
+        stadium: m.ctx.stadium,
+        weather: m.ctx.weather,
+        derby: m.ctx.derby,
+        motiv: m.ctx.motiv
+      };
+      if (isAdm) {
+        out.ctx.prompt = m.ctx.prompt1;
+        out.ctx.fat = m.ctx.fat;
+        out.ctx.race = m.ctx.race;
+      }
     }
   }
+
+  // Pre-match fallback context for scheduled/queued matches
+  if (!out.ctx) {
+    const H = team(f.home);
+    const dv = db.derbies.find((d: any) => (d.a === f.home && d.b === f.away) || (d.a === f.away && d.b === f.home));
+    out.ctx = {
+      comp: compName(f),
+      roundLabel: roundLabel(f),
+      stadium: (H?.stadium ? H.stadium + ', ' : '') + (H?.city || ''),
+      weather: 'Прогноз погоды формируется ближе к матчу',
+      derby: dv ? `${dv.name}. ${dv.note}` : 'нет',
+      motiv: { home: motivText(f.home, f), away: motivText(f.away, f) }
+    };
+  }
+
+  // Pre-match fallback lineups for scheduled/queued matches
+  if (!out.lineups) {
+    const H = team(f.home), A = team(f.away);
+    out.lineups = {};
+    for (const s of ['home', 'away']) {
+      const tid = f[s];
+      const tm = s === 'home' ? H : A;
+      const L = getLineup(f, tid);
+      const canSeeTactics = isAdm || (req.me?.teamId && req.me.teamId === tid);
+      out.lineups[s] = {
+        name: tm ? tm.name : tn(tid),
+        logo: teamLogo(tid),
+        formation: L.formation || '4-3-3',
+        speech: canSeeTactics ? (L.speech || '(установка не заполнена)') : undefined,
+        training: canSeeTactics ? (L.training || '') : undefined,
+        starters: (L.starters || []).map((id: string) => {
+          const p = player(id);
+          return { id, name: p ? p.name : 'Игрок', pos: p ? p.pos : '' };
+        }),
+        bench: (L.bench || []).map((id: string) => {
+          const p = player(id);
+          return { id, name: p ? p.name : 'Игрок', pos: p ? p.pos : '' };
+        })
+      };
+    }
+  }
+
   res.json(out);
 });
 
@@ -2752,8 +2928,18 @@ app.post('/api/admin/referee', admin, (req, res) => {
 app.post('/api/admin/fixture/referee', admin, (req, res) => {
   const f = fx(req.body.fid);
   if (!f) return fail(res, 'Матч не найден');
+  if (f.comp !== 'rpl' && f.comp !== 'cup') {
+    return fail(res, 'Арбитры назначаются только на матчи РПЛ и Кубка России');
+  }
   const r = db.referees.find((x: any) => x.id === req.body.refereeId);
   if (!r) return fail(res, 'Судья не найден');
+
+  const tourKey = getFixtureTourKey(f);
+  const conflict = (db.fixtures || []).find((x: any) => x.id !== f.id && getFixtureTourKey(x) === tourKey && x.refereeId === r.id);
+  if (conflict) {
+    return fail(res, `Арбитр ${r.name} уже назначен главным на матч «${tn(conflict.home)} — ${tn(conflict.away)}» в этом туре! Главный арбитр может судить только 1 матч в туре.`);
+  }
+
   f.refereeId = r.id;
   f.refereeName = r.name;
   save();
